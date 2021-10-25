@@ -2,6 +2,7 @@ import * as grpc from "grpc";
 import { PORT } from "../Utils";
 import {NewTodo, IdRequest, PersistedTodo} from "../proto/todo/todo_pb";
 import {TodoServiceClient} from "../proto/todo/todo_grpc_pb";
+import * as emptyPB from "google-protobuf/google/protobuf/empty_pb";
 
 const client = new TodoServiceClient(
     `localhost:${PORT}`,
@@ -36,5 +37,20 @@ function GetTodo(id: string): Promise<PersistedTodo> {
     });
 }
 
-// GetTodo("9d48197e-6f0f-440f-9606-3fca43b85cf8")
-CreateTodo().then(id => GetTodo(id.getId()))
+async function GetTodos(): Promise<PersistedTodo[]> {
+    return new Promise<PersistedTodo[]>((resolve, reject) => {
+        const stream = client.getTodos(new emptyPB.Empty());
+
+        // Iterator over incoming data
+        stream.on('data', (todo: PersistedTodo) => {
+            console.log(`${todo.getName()}: ${todo.getDescription()}`);
+        });
+
+        stream.on('end', resolve);
+        stream.on('error', reject);
+    });
+}
+
+GetTodos().then(item => console.log(JSON.stringify(item))).catch(item => console.log(item))
+// GetTodo("d42940ed-5861-49b6-82be-04058b72efab")
+// CreateTodo().then(id => GetTodo(id.getId()))

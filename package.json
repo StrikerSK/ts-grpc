@@ -1,8 +1,7 @@
 {
-  "name": "alt-grpc-ts",
+  "name": "ts-grpc",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Typescript application using gRPC",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "ts-node src/chat/ChatServer.ts",
@@ -10,8 +9,8 @@
     "todo_server": "ts-node src/todo/TodoServer.ts",
     "todo_client": "ts-node src/todo/TodoClient.ts"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["grpc", "typecript", "promise"],
+  "author": "Kristian Hanus",
   "license": "ISC",
   "devDependencies": {
     "@types/google-protobuf": "^3.15.5",
