@@ -1,7 +1,7 @@
 import * as grpc from "grpc"
-import { UserMessage } from "./proto/chat/chat_pb"
-import { IChatServiceServer, ChatServiceService } from "./proto/chat/chat_grpc_pb"
-import {PORT} from "./Utils";
+import { UserMessage } from "../proto/chat/chat_pb"
+import { IChatServiceServer, ChatServiceService } from "../proto/chat/chat_grpc_pb"
+import {PORT} from "../Utils";
 
 class ChatServerImpl implements IChatServiceServer {
     sayHello(call: grpc.ServerUnaryCall<UserMessage>, callback: grpc.sendUnaryData<UserMessage>): void {

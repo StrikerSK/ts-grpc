@@ -5,17 +5,21 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "ts-node src/Server.ts",
-    "client": "ts-node src/Client.ts",
-    "todo_client": "ts-node src/TodoClient.ts"
+    "server": "ts-node src/chat/ChatServer.ts",
+    "client": "ts-node src/chat/ChatClient.ts",
+    "todo_server": "ts-node src/todo/TodoServer.ts",
+    "todo_client": "ts-node src/todo/TodoClient.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/google-protobuf": "^3.15.5",
+    "@types/uuid": "^8.3.1",
     "grpc-tools": "^1.11.2",
     "ts-node": "^10.4.0",
-    "typescript": "^4.4.4"
+    "typescript": "^4.4.4",
+    "uuid": "^8.3.2"
   },
   "dependencies": {
     "grpc": "^1.24.11",

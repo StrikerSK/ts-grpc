@@ -1,7 +1,7 @@
 import * as grpc from "grpc";
-import { PORT } from "./Utils";
-import {NewTodo, IdRequest, PersistedTodo} from "./proto/todo/todo_pb";
-import {TodoServiceClient} from "./proto/todo/todo_grpc_pb";
+import { PORT } from "../Utils";
+import {NewTodo, IdRequest, PersistedTodo} from "../proto/todo/todo_pb";
+import {TodoServiceClient} from "../proto/todo/todo_grpc_pb";
 
 const client = new TodoServiceClient(
     `localhost:${PORT}`,
@@ -15,7 +15,7 @@ function CreateTodo(): Promise<IdRequest> {
                 console.log(err);
             }
 
-            console.log(res.getId());
+            console.log(`Todo id: ${res.getId()}`);
         });
     });
 }
@@ -27,7 +27,7 @@ function GetTodo(id: string): Promise<PersistedTodo> {
                 console.log(err);
             }
 
-            console.log(res);
+            console.log(`Todo id: ${res.getId()}`);
         });
     });
 }
