@@ -1,32 +1,27 @@
-import * as grpc from "@grpc/grpc-js"
-import {chatPackage, PORT} from "./Utils";
-import {ChatServiceDefinition, ChatServiceHandlers} from "../proto/chat/ChatService"
-import {MethodDefinition} from "@grpc/grpc-js";
-import {UserMessage, UserMessage__Output} from "../proto/chat/UserMessage";
+import * as grpc from "grpc"
+import { UserMessage } from "./proto/chat/chat_pb"
+import { IChatServiceServer, ChatServiceService } from "./proto/chat/chat_grpc_pb"
+import {PORT} from "./Utils";
 
-function main() {
-    const server = getServer();
+class ChatServerImpl implements IChatServiceServer {
+    sayHello(call: grpc.ServerUnaryCall<UserMessage>, callback: grpc.sendUnaryData<UserMessage>): void {
+        console.log(`Server response: ${call.request.getBody()}`);
 
-    server.bindAsync(`localhost:${PORT}`, grpc.ServerCredentials.createInsecure(), ((err, port) => {
-        if (err) {
-            console.log(err);
-            return;
-        }
+        const message = new UserMessage();
+        message.setBody("Hello user");
 
-        console.log(`Server running on port ${PORT}`);
-        server.start();
-    }));
+        callback(null, message);
+    }
 }
 
-function getServer() {
+function main() {
     const server = new grpc.Server();
-    server.addService(chatPackage.ChatService.service, {
-        "SayHello": (req, res) => {
-            console.log(req, res)
-        }
-    } as ChatServiceHandlers);
+    server.addService<IChatServiceServer>(ChatServiceService, new ChatServerImpl());
 
-    return server;
+    console.log(`Listening on ${PORT}`);
+
+    server.bind(`localhost:${PORT}`, grpc.ServerCredentials.createInsecure());
+    server.start();
 }
 
 main();

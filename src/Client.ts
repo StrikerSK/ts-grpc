@@ -1,31 +1,23 @@
-import {grpcObj, PORT} from "./Utils";
 import * as grpc from "grpc";
+import {ChatServiceClient} from "./proto/chat/chat_grpc_pb";
+import {PORT} from "./Utils";
+import {UserMessage} from "./proto/chat/chat_pb";
 
-const client = new grpcObj.chat.ChatService(
-    `localhost:${PORT}`, grpc.credentials.createInsecure()
-)
+const client = new ChatServiceClient(
+    `localhost:${PORT}`,
+    grpc.credentials.createInsecure(),
+);
 
-const deadline = new Date()
-deadline.setSeconds(deadline.getSeconds() + 5)
+function sendMessage(): Promise<UserMessage> {
+    return new Promise<UserMessage>((resolve, reject) => {
+        client.sayHello(new UserMessage().setBody("Hello server"), (err, res) => {
+            if (err) {
+                console.log(err);
+            }
 
-client.waitForReady(deadline, (error => {
-    if (error) {
-         console.log(error)
-        return
-    }
-
-    onClientReady();
-}))
-
-function onClientReady() {
-    client.sayHello({body: "Hello world"}, ((error, result) => {
-        if (error) {
-            console.log(error);
-            return;
-        }
-
-        console.log(result);
-    }))
+            console.log(res.getBody());
+        });
+    });
 }
 
-onClientReady();
+sendMessage();
