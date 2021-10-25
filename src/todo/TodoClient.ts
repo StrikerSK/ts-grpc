@@ -13,9 +13,11 @@ function CreateTodo(): Promise<IdRequest> {
         client.createTodo(new NewTodo().setName("First Todo").setDescription("Desc of todo"), (err, res) => {
             if (err) {
                 console.log(err);
+                reject(err);
             }
 
             console.log(`Todo id: ${res.getId()}`);
+            resolve(res);
         });
     });
 }
@@ -25,9 +27,14 @@ function GetTodo(id: string): Promise<PersistedTodo> {
         client.getTodo(new IdRequest().setId(id), (err, res) => {
             if (err) {
                 console.log(err);
+                reject(err);
             }
 
-            console.log(`Todo id: ${res.getId()}`);
+            console.log(`Persisted todo: ${res}`);
+            resolve(res);
         });
     });
 }
+
+// GetTodo("9d48197e-6f0f-440f-9606-3fca43b85cf8")
+CreateTodo().then(id => GetTodo(id.getId()))

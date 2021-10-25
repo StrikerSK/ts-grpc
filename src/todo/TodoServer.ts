@@ -7,7 +7,7 @@ import {sendUnaryData, ServerUnaryCall, ServerWritableStream} from "grpc";
 import * as emptyPB from "google-protobuf/google/protobuf/empty_pb";
 
 const test = emptyPB.Empty
-const todos = [];
+const todos: Array<PersistedTodo> = [];
 
 class TodoServerImpl implements ITodoServiceServer {
     createTodo(call: ServerUnaryCall<NewTodo>, callback: sendUnaryData<IdRequest>): void {
@@ -28,6 +28,16 @@ class TodoServerImpl implements ITodoServiceServer {
 
 
     getTodo(call: ServerUnaryCall<IdRequest>, callback: sendUnaryData<PersistedTodo>): void {
+        const searchID = call.request.getId();
+        const persistedTodo = todos.find(item => item.getId() == searchID);
+        console.log(persistedTodo);
+
+        if (persistedTodo) {
+            console.log(persistedTodo);
+            callback(null, persistedTodo);
+        } else {
+            console.log(`Item [${searchID}] could not be found!`)
+        }
     }
 
     getTodos(call: ServerWritableStream<emptyPB.Empty, PersistedTodo>): void {
