@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "ts-node src/Server.ts",
-    "client": "ts-node src/Client.ts"
+    "client": "ts-node src/Client.ts",
+    "todo_client": "ts-node src/TodoClient.ts"
   },
   "keywords": [],
   "author": "",
