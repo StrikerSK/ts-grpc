@@ -7,9 +7,14 @@
     "server": "ts-node src/chat/ChatServer.ts",
     "client": "ts-node src/chat/ChatClient.ts",
     "todo_server": "ts-node src/todo/TodoServer.ts",
-    "todo_client": "ts-node src/todo/TodoClient.ts"
+    "todo_client": "ts-node src/todo/TodoClient.ts",
+    "node": "ts-node src/NodeServer.ts"
   },
-  "keywords": ["grpc", "typecript", "promise"],
+  "keywords": [
+    "grpc",
+    "typecript",
+    "promise"
+  ],
   "author": "Kristian Hanus",
   "license": "ISC",
   "devDependencies": {
@@ -21,6 +26,9 @@
     "uuid": "^8.3.2"
   },
   "dependencies": {
+    "@types/express": "^4.17.13",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
     "grpc": "^1.24.11",
     "grpc_tools_node_protoc_ts": "^5.3.2"
   }

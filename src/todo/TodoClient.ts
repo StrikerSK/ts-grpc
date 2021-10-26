@@ -9,21 +9,26 @@ const client = new TodoServiceClient(
     grpc.credentials.createInsecure(),
 );
 
-function CreateTodo(): Promise<IdRequest> {
+export function CreateTodo(name: string, description: string, done: boolean): Promise<IdRequest> {
     return new Promise<IdRequest>((resolve, reject) => {
-        client.createTodo(new NewTodo().setName("First Todo").setDescription("Desc of todo"), (err, res) => {
+        const newTodo = new NewTodo()
+            .setName(name)
+            .setDescription(description)
+            .setDone(done)
+
+        client.createTodo(newTodo, (err, res) => {
             if (err) {
                 console.log(err);
                 reject(err);
             }
 
-            console.log(`Todo id: ${res.getId()}`);
+            console.log(`Created Todo ID: ${res.getId()}`);
             resolve(res);
         });
     });
 }
 
-function GetTodo(id: string): Promise<PersistedTodo> {
+export function GetTodo(id: string): Promise<PersistedTodo> {
     return new Promise<PersistedTodo>((resolve, reject) => {
         client.getTodo(new IdRequest().setId(id), (err, res) => {
             if (err) {
@@ -31,26 +36,22 @@ function GetTodo(id: string): Promise<PersistedTodo> {
                 reject(err);
             }
 
-            console.log(`Persisted todo: ${res}`);
+            console.log(`Get Todo: ${res}`);
             resolve(res);
         });
     });
 }
 
-async function GetTodos(): Promise<PersistedTodo[]> {
+export function GetTodos(): Promise<PersistedTodo[]> {
     return new Promise<PersistedTodo[]>((resolve, reject) => {
         const stream = client.getTodos(new emptyPB.Empty());
+        const tempArr: PersistedTodo[] = [];
 
         // Iterator over incoming data
         stream.on('data', (todo: PersistedTodo) => {
-            console.log(`${todo.getName()}: ${todo.getDescription()}`);
+            tempArr.push(new PersistedTodo().setName(todo.getName()).setDescription(todo.getDescription()).setDone(todo.getDone()))
         });
 
-        stream.on('end', resolve);
-        stream.on('error', reject);
+        stream.on("end", () => resolve(tempArr));
     });
 }
-
-GetTodos().then(item => console.log(JSON.stringify(item))).catch(item => console.log(item))
-// GetTodo("d42940ed-5861-49b6-82be-04058b72efab")
-// CreateTodo().then(id => GetTodo(id.getId()))

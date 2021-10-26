@@ -40,7 +40,7 @@ class TodoServerImpl implements ITodoServiceServer {
         }
     }
 
-    getTodos(call: ServerWritableStream<emptyPB.Empty, PersistedTodo>): void {
+   async getTodos(call: ServerWritableStream<emptyPB.Empty, PersistedTodo>): Promise<void> {
         for (const todo of todos) {
             call.write(todo);
         }
