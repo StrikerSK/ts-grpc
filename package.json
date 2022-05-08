@@ -3,12 +3,10 @@
   "version": "1.0.0",
   "description": "Typescript application using gRPC",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "ts-node src/chat/ChatServer.ts",
-    "client": "ts-node src/chat/ChatClient.ts",
-    "todo_server": "ts-node src/todo/TodoServer.ts",
-    "todo_client": "ts-node src/todo/TodoClient.ts",
-    "node": "ts-node src/NodeServer.ts"
+    "server": "ts-node src/server/TodoServer.ts",
+    "client": "ts-node src/client/TodoClient.ts",
+    "node": "ts-node src/index.ts",
+    "proto-gen": "yarn proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=./src/proto/todo ./src/proto/todo.proto"
   },
   "keywords": [
     "grpc",
@@ -18,6 +16,8 @@
   "author": "Kristian Hanus",
   "license": "ISC",
   "devDependencies": {
+    "@grpc/grpc-js": "^1.6.7",
+    "@grpc/proto-loader": "^0.6.12",
     "@types/google-protobuf": "^3.15.5",
     "@types/uuid": "^8.3.1",
     "grpc-tools": "^1.11.2",
