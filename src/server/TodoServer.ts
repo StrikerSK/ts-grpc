@@ -1,18 +1,9 @@
 // @ts-ignore
 import path from "path";
 import * as grpc from '@grpc/grpc-js'
-import * as protoLoader from '@grpc/proto-loader'
-import {ProtoGrpcType} from "../proto/todo/todo";
-import { PORT } from "../Utils";
+import {grpcObject, PORT} from "../Utils";
 import {TodoServiceHandlers} from "../proto/todo/todo/TodoService";
 import {createTodo, deleteTodo, findAll, readTodo, updateTodo} from './repository/LocalRepository'
-
-const PROTO_FILE = '../../proto/todo.proto'
-
-const packageDef = protoLoader.loadSync(path.resolve(__dirname, PROTO_FILE))
-const grpcObject = (grpc.loadPackageDefinition(packageDef) as unknown) as ProtoGrpcType
-
-const todoPackage = grpcObject.todo
 
 function main() {
     const server = getServer()
@@ -29,7 +20,7 @@ function main() {
 
 function getServer() {
     const server = new grpc.Server()
-    server.addService(todoPackage.TodoService.service, {
+    server.addService(grpcObject.todo.TodoService.service, {
         "ReadTodo": (req, res) => {
             res(null, readTodo(req.request))
         },

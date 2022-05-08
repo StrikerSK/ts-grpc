@@ -1,6 +1,6 @@
 # TypeScript with gRPC
 
-Application implements logic of gRPC client for communication with remote server.
+Application implements logic of gRPC client for communication with remote server created by Go or Java language.
 
 ### Source reference
 This tutorial were made thanks to following videos:
