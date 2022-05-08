@@ -1,8 +1,8 @@
-import {CustomTodo, CustomTodo__Output} from '../../../proto/todo/CustomTodo'
+import {CustomTodo, CustomTodo__Output} from '../../proto/todo/todo/CustomTodo'
 import  * as uuid from 'uuid'
-import {StringResponse} from "../../../proto/todo/StringResponse";
-import {StringRequest__Output} from "../../../proto/todo/StringRequest";
-import {TodoArray} from "../../../proto/todo/TodoArray";
+import {StringResponse} from "../../proto/todo/todo/StringResponse";
+import {StringRequest__Output} from "../../proto/todo/todo/StringRequest";
+import {TodoArray} from "../../proto/todo/todo/TodoArray";
 
 export const createTodo = (input: CustomTodo__Output): StringResponse => {
     console.log("User provided data to create: ", input);

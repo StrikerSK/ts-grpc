@@ -6,7 +6,7 @@
     "server": "ts-node src/server/TodoServer.ts",
     "client": "ts-node src/client/TodoClient.ts",
     "node": "ts-node src/NodeServer.ts",
-    "proto-gen": "yarn proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=./proto ./proto/todo.proto"
+    "proto-gen": "yarn proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=./src/proto/todo ./src/proto/todo.proto"
   },
   "keywords": [
     "grpc",

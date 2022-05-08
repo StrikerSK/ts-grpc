@@ -1,7 +1,6 @@
-node_modules
-src/proto
-proto/chat
 .idea
+node_modules
+src/proto/todo
 
 yarn.lock
 yarn-error.log

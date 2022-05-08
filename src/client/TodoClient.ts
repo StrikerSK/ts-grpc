@@ -2,8 +2,9 @@
 import path from "path";
 import * as grpc from '@grpc/grpc-js'
 import * as protoLoader from '@grpc/proto-loader'
-import {ProtoGrpcType} from "../../proto/todo";
+import {ProtoGrpcType} from "../proto/todo/todo";
 import { PORT } from "../Utils";
+import {Empty} from "google-protobuf/google/protobuf/empty_pb";
 
 const PROTO_FILE = '../../proto/todo.proto'
 
@@ -31,5 +32,8 @@ function onClientReady() {
             return
         }
         console.log(res)
+    })
+    client.FindAll(new Empty(), (err, res) => {
+        console.log(res?.todos)
     })
 }

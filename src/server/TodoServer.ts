@@ -2,9 +2,9 @@
 import path from "path";
 import * as grpc from '@grpc/grpc-js'
 import * as protoLoader from '@grpc/proto-loader'
-import {ProtoGrpcType} from "../../proto/todo";
+import {ProtoGrpcType} from "../proto/todo/todo";
 import { PORT } from "../Utils";
-import {TodoServiceHandlers} from "../../proto/todo/TodoService";
+import {TodoServiceHandlers} from "../proto/todo/todo/TodoService";
 import {createTodo, deleteTodo, findAll, readTodo, updateTodo} from './repository/LocalRepository'
 
 const PROTO_FILE = '../../proto/todo.proto'
