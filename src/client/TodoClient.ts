@@ -1,10 +1,10 @@
 // @ts-ignore
 import path from "path";
 import * as grpc from '@grpc/grpc-js'
-import {grpcObject, PORT} from "../Utils";
+import {grpcObject, GRPC_URL} from "../Utils";
 
 export const client = new grpcObject.todo.TodoService(
-    `0.0.0.0:${PORT}`, grpc.credentials.createInsecure()
+    GRPC_URL, grpc.credentials.createInsecure()
 )
 
 // const deadline = new Date()

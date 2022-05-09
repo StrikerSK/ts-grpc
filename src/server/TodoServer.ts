@@ -1,19 +1,19 @@
 // @ts-ignore
 import path from "path";
 import * as grpc from '@grpc/grpc-js'
-import {grpcObject, PORT} from "../Utils";
+import {grpcObject, GRPC_PORT, GRPC_URL} from "../Utils";
 import {TodoServiceHandlers} from "../proto/todo/todo/TodoService";
 import {createTodo, deleteTodo, findAll, readTodo, updateTodo} from './repository/LocalRepository'
 
 function main() {
     const server = getServer()
 
-    server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(), (err, port) => {
+    server.bindAsync(GRPC_URL, grpc.ServerCredentials.createInsecure(), (err, port) => {
         if (err) {
             console.log(err)
             return
         }
-        console.log(`Running server on ${PORT}`)
+        console.log(`Running server on ${GRPC_PORT}`)
         server.start()
     })
 }
