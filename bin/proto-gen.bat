@@ -1,1 +1,1 @@
-yarn proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=..\proto\ ..\proto\todo.proto
+yarn proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=.\src\commons\proto\task .\src\commons\proto\task.proto

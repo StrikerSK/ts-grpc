@@ -1,57 +1,55 @@
-import {CustomTodo, CustomTodo__Output} from '../../proto/todo/todo/CustomTodo'
 import  * as uuid from 'uuid'
-import {StringResponse} from "../../proto/todo/todo/StringResponse";
-import {StringRequest__Output} from "../../proto/todo/todo/StringRequest";
-import {TodoArray} from "../../proto/todo/todo/TodoArray";
+import {Task } from "../../commons/proto/task/task/Task";
+import {TaskRequest} from "../../commons/proto/task/task/TaskRequest";
+import {TaskList} from "../../commons/proto/task/task/TaskList";
+import {Empty} from "../../commons/proto/task/task/Empty";
 
-export const createTodo = (input: CustomTodo__Output): StringResponse => {
+export const createTask = (input: Task): TaskRequest => {
     console.log("User provided data to create: ", input);
     return {
-        output: uuid.v4()
+        id: uuid.v4()
     }
 }
 
-export const updateTodo = (input: CustomTodo): StringResponse => {
-    console.log("User provided updated data: ", input);
-    return {
-        output: `Data for [${input.id}] updated`
-    }
-}
-
-export const readTodo = (input: StringRequest__Output): CustomTodo => {
-    console.log(`User is reading data for id [${input.input}]`)
+export const readTask = (input: TaskRequest): Task => {
+    console.log(`User is reading data for id [${input.id}]`)
     return {
         name: "Task",
         description: "Task coming from TypeScript",
         done: false,
-        id: input.input
+        id: input.id
     }
 }
 
-export const findAll = (): TodoArray => {
+export const readTasks = (): TaskList => {
     console.log(`User is fetching all data`)
     return {
-        todos: [
+        tasks: [
             {
                 name: "Task 1",
                 description: "Task 1 coming from TypeScript",
                 done: false,
-                id: uuid.v4()
+                id: uuid.v4(),
+                tags: ["tag1", "tag2"]
             },
             {
                 name: "Task 2",
                 description: "Task 2 coming from TypeScript",
                 done: false,
-                id: uuid.v4()
+                id: uuid.v4(),
+                tags: ["tag1", "tag2"]
             }
         ]
     }
 }
 
-export const deleteTodo = (input: StringRequest__Output): StringResponse => {
-    console.log(`User is deleting data for id [${input.input}]`)
-    return {
-        output: `Data for [${input.input}] deleted`
-    }
+export const updateTask = (input: Task): Empty => {
+    console.log("User provided updated data: ", input);
+    return {}
+}
+
+export const deleteTask = (input: TaskRequest): Empty => {
+    console.log(`User is deleting data for id [${input.id}]`)
+    return {}
 }
 

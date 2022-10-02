@@ -1,13 +1,13 @@
 #!/usr/bin/bash
 
 # Name of the processed file
-PROTO_FILE_NAME="todo.proto"
+PROTO_FILE_NAME="task.proto"
 
 # Output folder path for generated files
-OUTPUT_PATH="./src/proto/todo"
+OUTPUT_PATH="./src/commons/proto/task"
 
 # Folder containing *.proto files
-PROTO_PATH="./proto"
+PROTO_PATH="./src/commons/proto"
 
 # Path to this plugin, Note this must be an absolute path on Windows (see #15)
 PROTOC_GEN_TS_PATH="./node_modules/.bin/protoc-gen-ts"

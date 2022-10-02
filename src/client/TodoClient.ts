@@ -3,7 +3,7 @@ import path from "path";
 import * as grpc from '@grpc/grpc-js'
 import {grpcObject, GRPC_URL} from "../Utils";
 
-export const client = new grpcObject.todo.TodoService(
+export const client = new grpcObject.task.TaskService(
     GRPC_URL, grpc.credentials.createInsecure()
 )
 

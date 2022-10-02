@@ -1,6 +1,8 @@
 .idea
 node_modules
-src/proto/todo
+
+src/commons/proto/todo
+src/commons/proto/task
 
 yarn.lock
 yarn-error.log
