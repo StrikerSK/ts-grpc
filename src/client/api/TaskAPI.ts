@@ -14,6 +14,10 @@ router.post('/', (req: any, res: any) => {
 
 router.get('/:taskID', (req: any, res: any) => {
     GrpcClient.ReadTask({id: req.params.taskID}, (err, response) => {
+        if (err) {
+            console.log(err.code)
+        }
+
         res.send(response);
     })
 });
@@ -21,6 +25,18 @@ router.get('/:taskID', (req: any, res: any) => {
 router.get('/', (req: any, res: any) => {
     GrpcClient.ReadTasks(new Empty(), (err, response) => {
         res.send(response);
+    })
+});
+
+router.put('/:taskID', (req: any, res: any) => {
+    const { body, params: {taskID} } = req;
+    body.id = taskID;
+    GrpcClient.UpdateTask(body, (err, response) => {
+        if (err) {
+            res.sendStatus(500);
+        }
+
+        res.sendStatus(200);
     })
 });
 

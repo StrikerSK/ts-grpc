@@ -1,55 +1,42 @@
-import  * as uuid from 'uuid'
-import {Task } from "../../commons/proto/task/task/Task";
+import * as uuid from 'uuid'
+import {Task} from "../../commons/proto/task/task/Task";
 import {TaskRequest} from "../../commons/proto/task/task/TaskRequest";
-import {TaskList} from "../../commons/proto/task/task/TaskList";
 import {Empty} from "../../commons/proto/task/task/Empty";
+import ITaskRepository from "./ITaskRepository";
+import {TaskList} from "../../commons/proto/task/task/TaskList";
 
-export const createTask = (input: Task): TaskRequest => {
-    console.log("User provided data to create: ", input);
-    return {
-        id: uuid.v4()
+export default class implements ITaskRepository {
+    private tasks: Task[] = []
+
+    createTask(input: Task): TaskRequest {
+        input.id = uuid.v4()
+        this.tasks.push(input);
+
+        return {
+            id: input.id
+        }
     }
-}
 
-export const readTask = (input: TaskRequest): Task => {
-    console.log(`User is reading data for id [${input.id}]`)
-    return {
-        name: "Task",
-        description: "Task coming from TypeScript",
-        done: false,
-        id: input.id
+    readTask(input: TaskRequest): Task | undefined {
+        return this.tasks.find(task => task.id === input.id)
     }
-}
 
-export const readTasks = (): TaskList => {
-    console.log(`User is fetching all data`)
-    return {
-        tasks: [
-            {
-                name: "Task 1",
-                description: "Task 1 coming from TypeScript",
-                done: false,
-                id: uuid.v4(),
-                tags: ["tag1", "tag2"]
-            },
-            {
-                name: "Task 2",
-                description: "Task 2 coming from TypeScript",
-                done: false,
-                id: uuid.v4(),
-                tags: ["tag1", "tag2"]
-            }
-        ]
+    readTasks(): TaskList {
+        return {
+            tasks: this.tasks
+        }
     }
-}
 
-export const updateTask = (input: Task): Empty => {
-    console.log("User provided updated data: ", input);
-    return {}
-}
+    updateTask(input: Task): Empty {
+        const index = this.tasks.findIndex(task => task.id === input.id)
+        this.tasks[index] = input
+        return {} ;
+    }
 
-export const deleteTask = (input: TaskRequest): Empty => {
-    console.log(`User is deleting data for id [${input.id}]`)
-    return {}
+    deleteTask(input: TaskRequest): Empty {
+        const index = this.tasks.findIndex(task => task.id === input.id)
+        this.tasks.splice(index, 1)
+        return {};
+    }
 }
 
