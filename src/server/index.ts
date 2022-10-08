@@ -5,20 +5,7 @@ import {grpcObject, GRPC_PORT, GRPC_URL} from "../Utils";
 import {TaskServiceHandlers} from "../commons/proto/task/task/TaskService";
 import {createTask, deleteTask, readTasks, readTask, updateTask} from './repository/LocalRepository'
 
-function main() {
-    const server = getServer()
-
-    server.bindAsync(GRPC_URL, grpc.ServerCredentials.createInsecure(), (err, port) => {
-        if (err) {
-            console.log(err)
-            return
-        }
-        console.log(`Running server on ${GRPC_PORT}`)
-        server.start()
-    })
-}
-
-function getServer() {
+const configureServer = () => {
     const server = new grpc.Server()
     server.addService(grpcObject.task.TaskService.service, {
         "ReadTask": (req, res) => {
@@ -41,4 +28,17 @@ function getServer() {
     return server
 }
 
-main()
+function runServer() {
+    const server = configureServer()
+
+    server.bindAsync(GRPC_URL, grpc.ServerCredentials.createInsecure(), (err, port) => {
+        if (err) {
+            console.log(err)
+            return
+        }
+        console.log(`Running server on ${GRPC_PORT}`)
+        server.start()
+    })
+}
+
+runServer()
