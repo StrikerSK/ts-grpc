@@ -3,7 +3,4 @@ node_modules
 
 src/commons/proto/task
 
-yarn.lock
 yarn-error.log
-
-package-lock.json
